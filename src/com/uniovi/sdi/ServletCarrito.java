@@ -1,7 +1,6 @@
 package com.uniovi.sdi;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.HashMap;
 
 import javax.servlet.ServletException;
@@ -32,31 +31,21 @@ public class ServletCarrito extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		HttpSession session=request.getSession();
-		HashMap<String,Integer> carrito =
-		 (HashMap<String,Integer>) request.getSession().getAttribute("carrito");
+		HttpSession session = request.getSession();
+		HashMap<String, Integer> carrito = (HashMap<String, Integer>) request.getSession().getAttribute("carrito");
 		// No hay carrito, creamos uno y lo insertamos en sesión
 		if (carrito == null) {
-		carrito = new HashMap<String,Integer>();
-		 request.getSession().setAttribute("carrito", carrito);
+			carrito = new HashMap<String, Integer>();
+			request.getSession().setAttribute("carrito", carrito);
 		}
 		String producto = request.getParameter("producto");
-		if ( producto != null){
-		insertarEnCarrito(carrito, producto);
+		if (producto != null) {
+			insertarEnCarrito(carrito, producto);
 		}
 		// Retornar la vista con parámetro "carrito"
 		request.setAttribute("paresCarrito", carrito);
-		getServletContext().getRequestDispatcher("/vista-carrito.jsp").forward(request,
-		response);
+		getServletContext().getRequestDispatcher("/vista-carrito.jsp").forward(request, response);
 
-	}
-
-	private String carritoEnHTML(HashMap<String, Integer> carrito) {
-		String carritoHTML = "";
-		for (String key : carrito.keySet()) {
-			carritoHTML += "<p>[" + key + "], " + carrito.get(key) + " unidades</p>";
-		}
-		return carritoHTML;
 	}
 
 	private void insertarEnCarrito(HashMap<String, Integer> carrito, String claveProducto) {
