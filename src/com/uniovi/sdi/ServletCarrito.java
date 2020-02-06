@@ -48,6 +48,8 @@ public class ServletCarrito extends HttpServlet {
 
 	}
 
+
+
 	private void insertarEnCarrito(HashMap<String, Integer> carrito, String claveProducto) {
 		if (carrito.get(claveProducto) == null) {
 			carrito.put(claveProducto, new Integer(1));
